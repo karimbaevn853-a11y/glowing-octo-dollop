@@ -1,1 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>$TONKS$ Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            padding-bottom: 70px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #131823;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-weight: 900;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .balance-box {
+            background: #1c2331;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .container {
+            padding: 15px;
+        }
+        .section-title {
+            font-size: 14px;
+            color: #8b96a5;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .game-card {
+            background: linear-gradient(135deg, #171f2d, #101622);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .game-card:active {
+            transform: scale(0.98);
+        }
+        .game-info h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .game-info p {
+            font-size: 12px;
+            color: #8b96a5;
+        }
+        /* Нижнее меню */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #131823;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-item {
+            text-align: center;
+            color: #8b96a5;
+            font-size: 11px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .nav-item.active {
+            color: #0088cc;
+        }
+        .nav-item div {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .inventory-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8b96a5;
+        }
+        .btn-primary {
+            background: #0088cc;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">$TONKS$</div>
+        <div class="balance-box">
+            <span>0.03</span> 💎
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Вкладка: ИГРЫ -->
+        <div id="tab-games" class="tab-content active">
+            <div class="game-card" onclick="alert('Запуск СЛОТЫ...')">
+                <div class="game-info">
+                    <h3>🎰 СЛОТЫ</h3>
+                    <p>Испытай свою удачу</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="alert('Запуск CRASH...')">
+                <div class="game-info">
+                    <h3>🚀 CRASH</h3>
+                    <p>Успей забрать коэффициент</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="alert('Запуск КЕЙСЫ...')">
+                <div class="game-info">
+                    <h3>🎁 КЕЙСЫ</h3>
+                    <p>Открывай и забирай редкие подарки</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="alert('Запуск MINES...')">
+                <div class="game-info">
+                    <h3>💣 MINES</h3>
+                    <p>Найди алмазы и избегай мин</p>
+                </div>
+            </div>
+            <div class="game-card" onclick="alert('Запуск АПГРЕЙД...')">
+                <div class="game-info">
+                    <h3>🧸 АПГРЕЙД</h3>
+                    <p>Улучшай свои скины и подарки</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка: ИНВЕНТАРЬ -->
+        <div id="tab-inventory" class="tab-content">
+            <div class="inventory-empty">
+                <h3>Инвентарь пуст</h3>
+                <p style="margin-top: 5px; font-size: 13px;">Есть подарки на аккаунте? Добавь их через бота!</p>
+            </div>
+            <button class="btn-primary" onclick="alert('Обмен подарка')">Обменять подарок на GRAM</button>
+        </div>
+
+        <!-- Вкладка: ЗАДАНИЯ -->
+        <div id="tab-tasks" class="tab-content">
+            <div class="section-title">Ежедневные задания</div>
+            <div class="game-card">
+                <div class="game-info">
+                    <h3>Подписаться на канал</h3>
+                    <p>Награда: +0.1 💎</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка: ЛИДЕРЫ -->
+        <div id="tab-leaders" class="tab-content">
+            <div class="section-title">Топ игроков недели</div>
+            <div class="game-card">
+                <div class="game-info">
+                    <h3>🥇 1. Повелитель Подарков</h3>
+                    <p>Оборот: 1,654 💎</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя навигация -->
+    <nav>
+        <button class="nav-item" onclick="switchTab('inventory', this)">
+            <div>📦</div>Инвентарь
+        </button>
+        <button class="nav-item active" onclick="switchTab('games', this)">
+            <div>🎮</div>Игры
+        </button>
+        <button class="nav-item" onclick="switchTab('tasks', this)">
+            <div>📋</div>Задания
+        </button>
+        <button class="nav-item" onclick="switchTab('leaders', this)">
+            <div>🏆</div>Лидеры
+        </button>
+    </nav>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function switchTab(tabName, element) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('tab-' + tabName).classList.add('active');
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
 
